@@ -17,9 +17,16 @@ struct Post {
   var username: String
   var profilePicture: String
   var image: Image
+  var video: Video?
   
   struct Image {
-    var url: String
+    var url: NSURL
+    var width: Int
+    var height: Int
+  }
+  
+  struct Video {
+    var url: NSURL
     var width: Int
     var height: Int
   }
@@ -32,7 +39,12 @@ struct Post {
     profilePicture = json["user"]["profile_picture"].stringValue
     
     let imageJSON = json["images"]["standard_resolution"]
-    image = Image(url: imageJSON["url"].stringValue, width: imageJSON["width"].intValue, height: imageJSON["height"].intValue)
+    image = Image(url: NSURL(string: imageJSON["url"].stringValue)!, width: imageJSON["width"].intValue, height: imageJSON["height"].intValue)
+    
+    if json["videos"]["standard_resolution"].isExists() {
+      let videoJSON = json["videos"]["standard_resolution"]
+      video = Video(url: NSURL(string: videoJSON["url"].stringValue)!, width: videoJSON["width"].intValue, height: videoJSON["height"].intValue)
+    }
   }
   
 }

@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import Haneke
+import AVKit
+import AVFoundation
 
 class PostCell: UITableViewCell {
   
@@ -17,13 +20,25 @@ class PostCell: UITableViewCell {
   
   override func awakeFromNib() {
     super.awakeFromNib()
-    // Initialization code
   }
   
   override func setSelected(selected: Bool, animated: Bool) {
     super.setSelected(selected, animated: animated)
+  }
+  
+  func layoutContent() {
+    postTitleLabel.text = post?.id
+    postImageView.hnk_setImageFromURL(post!.image.url)
     
-    // Configure the view for the selected state
+
+    if post?.video != nil {
+      let player = AVPlayer(URL: (post?.video?.url)!)
+      let playerController = AVPlayerViewController()
+      playerController.player = player
+      self.contentView.addSubview(playerController.view)
+      playerController.view.frame = postImageView.frame
+//      playerController.player?.play()
+    }
   }
   
 }

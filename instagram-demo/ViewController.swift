@@ -30,7 +30,7 @@ class ViewController: UIViewController {
         guard let responseValue = response.result.value else { return }
         let json = JSON(responseValue)
         let jsonData = json["data"].arrayValue
-        let posts = jsonData.map { Post(json: $0).caption }
+        let posts = jsonData.map { Post(json: $0).image.url }
         print(posts)
     }
   }

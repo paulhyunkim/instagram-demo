@@ -9,16 +9,30 @@
 import Foundation
 import SwiftyJSON
 
-final class Post {
+struct Post {
   
   var id: String
   var createdTime: String
   var caption: String
+  var username: String
+  var profilePicture: String
+  var image: Image
+  
+  struct Image {
+    var url: String
+    var width: Int
+    var height: Int
+  }
   
   init(json: JSON) {
     id = json["id"].stringValue
     createdTime = json["created_time"].stringValue
     caption = json["caption"]["text"].stringValue
+    username = json["user"]["username"].stringValue
+    profilePicture = json["user"]["profile_picture"].stringValue
+    
+    let imageJSON = json["images"]["standard_resolution"]
+    image = Image(url: imageJSON["url"].stringValue, width: imageJSON["width"].intValue, height: imageJSON["height"].intValue)
   }
   
 }

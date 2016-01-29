@@ -12,17 +12,27 @@ import SwiftyJSON
 import OAuthSwift
 import Alamofire
 
-
 let accessToken = "37029106.0708237.84ac9e82a92447ea92f48cc8f849846e"
 
 class ViewController: UIViewController {
 
+  @IBOutlet weak var postsTableView: UITableView!
+  
+  var dataSource: PostsTableViewDataSource?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    registerNibs()
+    dataSource = PostsTableViewDataSource()
+    postsTableView.dataSource = dataSource
+    postsTableView.delegate = self
     
     getMedia()
   }
 
+  func registerNibs() {
+    postsTableView.registerNib(UINib(nibName: "PostCell", bundle: nil), forCellReuseIdentifier: "PostCell")
+  }
   
   func getMedia() {
     Alamofire.request(.GET, "https://api.instagram.com/v1/users/self/media/recent/?access_token=\(accessToken)", parameters: ["count": 2])
@@ -47,3 +57,9 @@ class ViewController: UIViewController {
 
 }
 
+
+extension ViewController: UITableViewDelegate {
+  
+  
+  
+}

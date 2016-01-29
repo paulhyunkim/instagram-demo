@@ -45,6 +45,8 @@ struct Post {
       let videoJSON = json["videos"]["standard_resolution"]
       video = Video(url: NSURL(string: videoJSON["url"].stringValue)!, width: videoJSON["width"].intValue, height: videoJSON["height"].intValue)
     }
+    
+    print(json)
   }
   
 }

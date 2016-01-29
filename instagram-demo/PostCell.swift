@@ -15,6 +15,7 @@ class PostCell: UITableViewCell {
   
   @IBOutlet weak var postTitleLabel: UILabel!
   @IBOutlet weak var postImageView: UIImageView!
+  @IBOutlet weak var postImageViewAspectRatio: NSLayoutConstraint!
   
   var post: Post?
   
@@ -28,6 +29,8 @@ class PostCell: UITableViewCell {
   
   func layoutContent() {
     postTitleLabel.text = post?.id
+    postImageViewAspectRatio.constant = CGFloat((post?.image.width)!)/CGFloat((post?.image.height)!)
+//    postImageView.frame = CGRect(x: 0, y: 0, width: (post?.image.width)!, height: (post?.image.height)!)
     postImageView.hnk_setImageFromURL(post!.image.url)
     
 
